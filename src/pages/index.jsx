@@ -36,7 +36,7 @@ export default function Home() {
     // debounce
     timeout = setTimeout(() => {
       setPokemons(
-        pokemons.filter((pokemon) =>
+        DataPokemons.filter((pokemon) =>
           pokemon.name.toLowerCase().includes(keyword.toLowerCase())
         )
       );
@@ -44,14 +44,18 @@ export default function Home() {
   };
 
   // handle detail pokemon
-
   const handleDetailItem = async (url) => {
     const response = await fetch(`${url}`);
     const data = await response.json();
-    console.log(data);
+
+    // set data each pokemon
     setPokemon(data);
+
+    // show modal
     setShowModal(true);
   };
+
+  console.log(currentItems);
 
   return (
     <>
@@ -73,7 +77,7 @@ export default function Home() {
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {currentItems &&
+            {currentItems.length ? (
               currentItems.map((item, index) => {
                 return (
                   <Card
@@ -83,7 +87,12 @@ export default function Home() {
                     onHandleOpenDetail={handleDetailItem}
                   />
                 );
-              })}
+              })
+            ) : (
+              <h3 className="text-2xl font-bold">
+                Not Found! <br /> Try another keyword.
+              </h3>
+            )}
           </div>
           <ReactPaginate
             className="mt-10 flex items-center justify-center -space-x-px border-t border-gray-200 bg-white px-4 py-6 pt-10 sm:px-6"
@@ -103,7 +112,7 @@ export default function Home() {
         </div>
       </main>
 
-      {showModal ? <Modal setShowModal={setShowModal} data={pokemon} /> : null}
+      {showModal && <Modal setShowModal={setShowModal} data={pokemon} />}
     </>
   );
 }

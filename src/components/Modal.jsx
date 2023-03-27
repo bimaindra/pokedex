@@ -17,7 +17,11 @@ export const Modal = ({ setShowModal, data }) => {
       <div className="modal">
         <div>
           <Image
-            src={data.sprites.back_default}
+            src={
+              data.sprites.front_default
+                ? data.sprites.front_default
+                : data.sprites.back_default
+            }
             alt={data.name}
             width={80}
             height={80}
