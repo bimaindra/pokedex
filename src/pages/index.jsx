@@ -55,8 +55,6 @@ export default function Home() {
     setShowModal(true);
   };
 
-  console.log(currentItems);
-
   return (
     <>
       <main className="py-10">
