@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import DataPokemons from "@/data/pokemon.json";
 import Card from "@/components/Card";
@@ -60,8 +60,8 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {currentItems &&
               currentItems.map((item, index) => {
-                let arr = item.url.split("/");
-                let getPokemonID = arr[arr.length - 2];
+                const arr = item.url.split("/");
+                const getPokemonID = arr[arr.length - 2];
                 return <Card key={index} name={item.name} id={getPokemonID} />;
               })}
           </div>
