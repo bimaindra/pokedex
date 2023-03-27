@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#portal .modal-container {
+  @apply fixed inset-0 z-50 flex h-screen items-center
+  justify-center bg-black bg-opacity-70;
+}
+
+.modal-container .modal {
+  @apply relative
+  z-10 min-h-[220px] w-[350px] rounded-md bg-white px-6 pt-8;
+  animation: animate 0.3s;
+}
+.modal button {
+  @apply absolute top-2 right-2 cursor-pointer rounded-sm border-none bg-red-500 py-2 px-3
+  font-bold text-white;
+}
+
+@keyframes animate {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}

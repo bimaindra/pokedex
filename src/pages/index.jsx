@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
+import { Modal } from "@/components/Modal";
 import DataPokemons from "@/data/pokemon.json";
 import Card from "@/components/Card";
 
 export default function Home() {
   const [pokemons, setPokemons] = useState(DataPokemons);
+  const [pokemon, setPokemon] = useState({});
+
+  // popup
+  const [showModal, setShowModal] = useState(false);
 
   // pagination purpose
   const [itemOffset, setItemOffset] = useState(0);
@@ -38,6 +43,16 @@ export default function Home() {
     }, 1000);
   };
 
+  // handle detail pokemon
+
+  const handleDetailItem = async (url) => {
+    const response = await fetch(`${url}`);
+    const data = await response.json();
+    console.log(data);
+    setPokemon(data);
+    setShowModal(true);
+  };
+
   return (
     <>
       <main className="py-10">
@@ -60,9 +75,14 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {currentItems &&
               currentItems.map((item, index) => {
-                const arr = item.url.split("/");
-                const getPokemonID = arr[arr.length - 2];
-                return <Card key={index} name={item.name} id={getPokemonID} />;
+                return (
+                  <Card
+                    key={index}
+                    name={item.name}
+                    url={item.url}
+                    onHandleOpenDetail={handleDetailItem}
+                  />
+                );
               })}
           </div>
           <ReactPaginate
@@ -71,7 +91,7 @@ export default function Home() {
             breakLinkClassName="relative inline-flex h-full items-center px-4 py-2 font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             previousLinkClassName="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             nextLinkClassName="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-            activeLinkClassName="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 font-semibold text-white hover:bg-indigo-800 focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            activeLinkClassName="relative z-10 inline-flex items-center bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-800 focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
             breakLabel="..."
             nextLabel=">"
             onPageChange={handlePageClick}
@@ -82,6 +102,8 @@ export default function Home() {
           />
         </div>
       </main>
+
+      {showModal ? <Modal setShowModal={setShowModal} data={pokemon} /> : null}
     </>
   );
 }
