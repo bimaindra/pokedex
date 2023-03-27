@@ -58,9 +58,9 @@ export default function Home() {
   return (
     <>
       <main className="py-10">
-        <div className="container">
-          <h1 className="mb-2 text-3xl font-bold">Pokedex</h1>
-          <div className="mb-10 flex items-center justify-between">
+        <div className="container px-4 lg:px-0">
+          <h1 className="mb-4 text-3xl font-bold">Pokedex</h1>
+          <div className="mb-10 flex flex-col items-center justify-between gap-4 lg:flex-row">
             <p>
               Search for Pokémon by using the name or their National Pokédex
               number
@@ -69,7 +69,7 @@ export default function Home() {
               <input
                 type="text"
                 placeholder="Search here..."
-                className="rounded-sm border py-2 px-4"
+                className="w-full rounded-sm border py-2 px-4 lg:w-auto"
                 onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
@@ -102,7 +102,7 @@ export default function Home() {
             breakLabel="..."
             nextLabel=">"
             onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={1}
             pageCount={pageCount}
             previousLabel="<"
             renderOnZeroPageCount={null}
